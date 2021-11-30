@@ -1,0 +1,174 @@
+﻿@model ReservationRestaurant.Data.Sitting
+
+@{
+    ViewData["Title"] = "ReservationList";
+}
+
+<h1>Reservation list for: </h1>
+
+<h4> Sitting Id: @Model.Id</h4>
+<h4> Name      : @Model.Name</h4>
+<h4> Start time: @Model.StartTime.ToShortDateString()  @Model.StartTime.ToShortTimeString()</h4>
+
+<p>
+    <a asp-area="" asp-controller="Reservation" asp-action="PreCreate" asp-route-sittingId="@Model.Id" class="btn btn-sandy">Create New</a>
+    <a asp-action="IndexList" class="btn btn-sandy">Go Back to Sitting List</a>
+</p>
+<hr />
+<table class="table table-sm" style="background-color:antiquewhite">
+    <thead>
+        <tr>
+            @*<th>
+                    Id
+                </th>*@
+            <th>
+                Sitting
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Start Time
+            </th>
+            <th>
+                Guests
+            </th>
+            <th>
+                Booking Status
+            </th>
+            <th>
+                Booking Origin
+            </th>
+            <th>
+                Email
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="sortable2">
+        @foreach (var item in Model.Reservations)
+        {
+            <tr @if (item.ReservationStatus.Name == "Pending") { <text> style="color: saddlebrown" </text>  } else if (item.ReservationStatus.Name == "Confirmed") { <text> style="color:blue" </text>  } else if (item.ReservationStatus.Name == "Cancelled") { <text> style="color:red" </text> }
+                class="ui-state-default">
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sitting.Name)
+                </td>
+                <td>
+                    @item.StartTime.ToShortDateString()
+                </td>
+                <td>
+                    @item.StartTime.ToShortTimeString()
+                </td>
+                <td style="text-align: center;">
+                    @Html.DisplayFor(modelItem => item.Guests)
+                </td>
+                <td style="text-align: center;">
+                    @Html.DisplayFor(modelItem => item.ReservationStatus.Name)
+                </td>
+                <td style="text-align: center;">
+                    @Html.DisplayFor(modelItem => item.ReservationOrigin.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Person.Email)
+                </td>
+                <td>
+                    <a asp-area="" asp-controller="Reservation" asp-action="Update" asp-route-id="@item.Id" class="btn btn-sandy">Edit</a>
+                    <a asp-area="" asp-controller="Reservation" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sandy">Details</a>
+                    <a asp-area="" asp-controller="Reservation" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sandy">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal">
+    Delete All and Sitting?
+</button>
+<!-- Modal -->
+
+<div class="container">
+    <div class="row">
+        <div class="modal-box ">
+            <div class="modal fade" data-bs-backdrop="static" id="myModal" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <div class="modal-body">
+                            <div class="icon"> ! </div>
+                            <h4 class="title">Delete Sitting</h4>
+                            <h3 class="description">Delete the Sitting? or clear all the Reservations?</h3>
+                            <p>Are you sure you want to delete?</p>
+                            <form style="margin:0; padding:0; display:inline" asp-action="Delete">
+                                <input type="hidden" asp-for="Id" />
+                                <input style="display:inline" type="submit" value="Delete sitting?" class="subscribe" />
+                            </form>
+                            <form style="margin:0; padding:0; display:inline" asp-action="DeleteAll">
+                                <input type="hidden" asp-for="Id" />
+                                <input style="display:inline" type="submit" value="Clear List" class="subscribe" />
+                            </form>
+                            <button type="button" class="modal-cancel" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JScript{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+    <script>
+
+        $(function () {
+            $("#sortable2").sortable();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#myModal").modal();
+        });</script>
+}
+@section Styles{
+    <style>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+            background-color: antiquewhite;
+            font-family: verdana,Times New Roman, Times, serif;
+        }
+
+        thead {
+            font-size: large;
+        }
+
+        td {
+            text-align: left;
+            padding: 16px;
+            font-size: medium;
+        }
+
+        tr:nth-child(even) {
+            background-color: #ffdeab;
+        }
+
+        a.btn {
+            margin: 5px;
+        }
+
+        tr {
+            vertical-align: middle;
+        }
+    </style>
+}

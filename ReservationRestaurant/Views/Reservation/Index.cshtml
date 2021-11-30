@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Reservation By Status List</h1>
+<p>
+    <a asp-action="IndexList" asp-route-status="" class="btn btn-sandy">Show All Reservations</a>
+</p>
+
+<div class="table-responsive-sm">
+    <table class="table table-sm" style="">
+        <thead>
+            <tr>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a class="btn btn-papery col-12 text-start mx-auto " asp-action="IndexList" asp-route-status="Pending">Pending</a></td>
+            </tr>
+            <tr>
+                <td><a class="btn btn-papery col-12 text-start mx-auto" asp-action="IndexList" asp-route-status="Confirmed">Confirmed</a></td>
+            </tr>
+            <tr>
+                <td><a class="btn btn-papery col-12 text-start mx-auto" asp-action="IndexList" asp-route-status="Cancelled">Cancelled</a></td>
+            </tr>
+            <tr>
+                <td><a class="btn btn-papery col-12 text-start mx-auto" asp-action="IndexList" asp-route-status="Seated">Seated</a></td>
+            </tr>
+            <tr>
+                <td><a class="btn btn-papery col-12 text-start mx-auto" asp-action="IndexList" asp-route-status="Complete">Completed</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Styles{
+    <style>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            background-color: white;
+            font-weight: bold;
+            font-size: large;
+            font-family: verdana,Times New Roman, Times, serif;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 16px;
+        }
+
+        a {
+            text-decoration: none;
+
+        }
+
+            a:hover {
+                color: dimgray;
+            }
+
+        ul.abc {
+            list-style-type: none;
+        }
+
+        li.abc {
+            background: #f0e7c6;
+            margin: 5px;
+            padding: 20px;
+        }
+
+        a.btn {
+            font-size: large;
+            font-weight: bold;
+            padding: 16px;
+            margin: 5px;
+        }
+    </style>
+}
